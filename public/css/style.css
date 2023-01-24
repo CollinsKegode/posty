@@ -1,0 +1,42 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.access-point {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f2f2f2;
+}
+
+.access-point form {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #808080;
+}
+
+.access-point input {
+    margin-bottom: 7px;
+}
+
+.access-point input[type="submit"] {
+    background-color: #0b0ba5;
+    border: 1px solid #0b0ba5;
+    color: #fff;
+}
+
+.access-point a {
+    text-decoration: none;
+    color: #0b0ba5;
+    font-weight: bold;
+}
+
+.access-point a:hover {
+    text-decoration: underline;
+}
