@@ -1,18 +1,23 @@
 <%- include('partials/header') %>
     <main class="access-point">
 
-        <form action="">
+        <form action="/signup" method="post">
             <h2>Create account</h2>
+
+            <% if(error) {%>
+                <p class="error"><%= message %></p>
+            <% } %>
+
             <label for="">Full Name</label>
-            <input type="text" name="" id="">
+            <input type="text" name="fullname" id="" value="<%= user.fullname %>" required>
             <label for="">Email Address</label>
-            <input type="email" name="" id="">
+            <input type="email" name="email" id="" value="<%= user.email %>" required>
             <label for="">Password</label>
-            <input type="password" name="" id="">
+            <input type="password" name="password" id="" value="<%= user.password %>" required minlength="8">
             <label for="">Confirm Password</label>
-            <input type="text" name="" id="">
+            <input type="text" name="confirmPassword" id="" value="<%= user.confirmPassword %>" required minlength="8">
             <input type="submit" value="Login">
-            <p>Have an account already? <a href="/login">Create one</a></p>
+            <p>Have an account already? <a href="/login">Login</a></p>
         </form>
     </main>
     
