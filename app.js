@@ -22,7 +22,35 @@ app.get('/', (req, res) => {
 
 //submit login form
 app.post('/login', (req, res) => {
-
+    const user = {
+        email: req.body.email,
+        password: req.body.password
+    }
+    // check if user exists
+    let sql = 'SELECT * FROM user WHERE email = ?'
+    connection.query(
+        sql,
+        [ user.email ],
+        (error, results) => {
+            if (results.length > 0) {
+                // compare password submitted with pas
+                if (user.password === results[0].password) {
+                    // grand access
+                    console.log('User successfully logged in');
+                } else {
+                    // incorect passwordword stored in the db
+                    let error = true
+                    let message = 'Incorect password'
+                    res.render('login', {user, error, message})
+                }
+            } else {
+                // user does not exist
+                let error = true
+                let message = 'Account does not exist'
+                res.render('login', {user, error, message})
+            }
+        }
+    )
 })
 
 //display login form
@@ -68,7 +96,7 @@ app.post('/signup', (req, res) => {
                     res.render('signup', {user, error, message})
                 } else {
                     // create user
-                    let sql = 'INSERT INTO user (usename, email, password) VALUES (?,?,?)'
+                    let sql = 'INSERT INTO user (username, email, password) VALUES (?,?,?)'
                     connection.query(
                         sql,
                         [user.fullname, user.email, user.password],
