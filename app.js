@@ -33,12 +33,12 @@ app.post('/login', (req, res) => {
         [ user.email ],
         (error, results) => {
             if (results.length > 0) {
-                // compare password submitted with pas
+                // compare password submitted with password in the db
                 if (user.password === results[0].password) {
                     // grand access
                     console.log('User successfully logged in');
                 } else {
-                    // incorect passwordword stored in the db
+                    // incorect password stored in the db
                     let error = true
                     let message = 'Incorect password'
                     res.render('login', {user, error, message})
