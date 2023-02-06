@@ -1,5 +1,7 @@
 import express from "express";
 import mysql from "mysql"
+import bcrypt from "bcrypt"
+import session from "express-session";
 
 const app = express()
 const connection = mysql.createConnection({
@@ -9,11 +11,28 @@ const connection = mysql.createConnection({
     database: 'posty'
 })
 
+// prepare to use seesion
+app.use(session({
+    secret: 'siri ya watatu',
+    resave: true,
+    saveUninitialize: false
+}))
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 
 //config to access form information
 app.use(express.urlencoded({extended: false}))
+
+// constantly check if user loggen in. the function will be excecuted with every request mode
+app.use((req, res, next) => {
+    if (req.session.userID === undefined) {
+        console.log('user not logged in');
+    } else {
+        console.log('user logged in');
+    }
+    // prompts what to do after
+    next()
+}) 
 
 //homepage
 app.get('/', (req, res) => {
@@ -33,9 +52,13 @@ app.post('/login', (req, res) => {
         [ user.email ],
         (error, results) => {
             if (results.length > 0) {
-                // compare password submitted with password in the db
-                if (user.password === results[0].password) {
+                // compare password submitted with hashed password in the db
+            bcrypt.compare(user.password, results[0].password, (error, isEqual) => {
+                if (isEqual) {
                     // grand access
+                    req.session.userID = results[0].u_id
+                    req.session.userName = results[0].username
+
                     console.log('User successfully logged in');
                 } else {
                     // incorect password stored in the db
@@ -43,6 +66,9 @@ app.post('/login', (req, res) => {
                     let message = 'Incorect password'
                     res.render('login', {user, error, message})
                 }
+            })
+
+                
             } else {
                 // user does not exist
                 let error = true
@@ -95,15 +121,19 @@ app.post('/signup', (req, res) => {
                     let message = 'Account already exists with the email provided.'
                     res.render('signup', {user, error, message})
                 } else {
-                    // create user
-                    let sql = 'INSERT INTO user (username, email, password) VALUES (?,?,?)'
-                    connection.query(
-                        sql,
-                        [user.fullname, user.email, user.password],
-                        (errors, results) => {
-                            console.log('user successfully created');
-                        }
-                    )
+                    // hash password and create user
+
+                    bcrypt.hash(user.password, 10, (error, hash) => {
+                        let sql = 'INSERT INTO user (username, email, password) VALUES (?,?,?)'
+                        connection.query(
+                            sql,
+                            [user.fullname, user.email, hash],
+                            (errors, results) => {
+                                console.log('user successfully created');
+                            }
+                        )
+                    })
+                    
                 }
                 
             }
