@@ -26,9 +26,11 @@ app.use(express.urlencoded({extended: false}))
 // constantly check if user loggen in. the function will be excecuted with every request mode
 app.use((req, res, next) => {
     if (req.session.userID === undefined) {
-        console.log('user not logged in');
+        res.locals.isLoggedIn = false
+        res.locals.username = 'Guest'
     } else {
-        console.log('user logged in');
+        res.locals.isLoggedIn = true
+        res.locals.username = req.session.username.toString().split(' ')[0]
     }
     // prompts what to do after
     next()
@@ -57,9 +59,11 @@ app.post('/login', (req, res) => {
                 if (isEqual) {
                     // grand access
                     req.session.userID = results[0].u_id
-                    req.session.userName = results[0].username
+                    req.session.username = results[0].username
 
                     console.log('User successfully logged in');
+                    res.redirect('/')
+
                 } else {
                     // incorect password stored in the db
                     let error = true
@@ -146,6 +150,14 @@ app.post('/signup', (req, res) => {
         res.render('signup', {user, error, message})
     }
 })
+
+// logout
+app.get('/logout', (req, res) => {
+    req.session.destroy(() => {
+        res.redirect('/')
+    })
+})
+
 
 app.listen(4000, () => {
     console.log('app is running...');
