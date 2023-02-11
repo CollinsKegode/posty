@@ -26,6 +26,11 @@
     margin: 5 0;
 }
 
+.container {
+    padding-left: 150px;
+    padding-right: 150px;
+}
+
 .access-point {
     display: flex;
     justify-content: center;
@@ -67,4 +72,33 @@
 
 .access-point a:hover {
     text-decoration: underline;
+}
+
+header {
+    height: 60px;
+    background-color: #f2f2f2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 a {
+    text-decoration: none;
+    color: #0b0ba5;
+    font-family: Mukta-Bold;
+}
+
+nav li {
+    display: inline;
+    margin-left: 10px;
+}
+
+nav li:hover {
+    border-bottom: 2px solid #0b0ba5;
+}
+
+nav a {
+    text-decoration: none;
+    color: #0b0ba5;
+    font-size: 18px;
 }
