@@ -158,6 +158,17 @@ app.get('/logout', (req, res) => {
     })
 })
 
+//create a post
+app.post('/create-a-post', (req, post) => {
+    let sql = 'INSERT INTO posts (post, u_id_fk) VALUES (?,?)'
+    connection.query(
+        sql,
+        [req.body.post, req.session.userID],
+        (error, results) => {
+            res.redirect('/')
+        }
+    )
+})
 
 app.listen(4000, () => {
     console.log('app is running...');
