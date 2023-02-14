@@ -23,7 +23,21 @@
     color: #fff;
     text-align: center;
     border-radius: 5px;
-    margin: 5 0;
+    margin: 5px 0;
+}
+
+#not-loggedin {
+    background-image: url(../images/samsung.jpg);
+    background-position: center;
+    height: 100vh;
+    color: #fff; 
+}
+
+#not-loggedin h2 {
+    text-align: center;
+    margin-top: 150px;
+    font-size: 67px;
+
 }
 
 .container {
@@ -101,4 +115,19 @@ nav a {
     text-decoration: none;
     color: #0b0ba5;
     font-size: 18px;
+}
+
+#create-post {
+    display: flex;
+    flex-direction: column;
+}
+
+#create-post input[type="submit"] {
+    background-color: #0b0ba5;
+    border: 1px solid #0b0ba5;
+    border-radius: 5px;
+    color: #fff;
+    padding: 4px 8px;
+    width: max-content;
+    margin-top: 5px;
 }
