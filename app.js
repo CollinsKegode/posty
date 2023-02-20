@@ -38,7 +38,13 @@ app.use((req, res, next) => {
 
 //homepage
 app.get('/', (req, res) => {
-    res.render('index')
+    let sql = 'SELECT * FROM posts JOIN user ON posts.u_id_fk = u_id ORDER BY posts.created_at DESC'
+    connection.query(
+        sql, (error, results) => {
+            res.render('index', { posts: results })
+        }
+    )
+ 
 })
 
 //submit login form
@@ -82,6 +88,7 @@ app.post('/login', (req, res) => {
         }
     )
 })
+
 
 //display login form
 app.get('/login', (req, res) => {
@@ -133,7 +140,7 @@ app.post('/signup', (req, res) => {
                             sql,
                             [user.fullname, user.email, hash],
                             (errors, results) => {
-                                console.log('user successfully created');
+                               res.redirect('/login')
                             }
                         )
                     })
@@ -159,7 +166,7 @@ app.get('/logout', (req, res) => {
 })
 
 //create a post
-app.post('/create-a-post', (req, post) => {
+app.post('/create-a-post', (req, res) => {
     let sql = 'INSERT INTO posts (post, u_id_fk) VALUES (?,?)'
     connection.query(
         sql,
