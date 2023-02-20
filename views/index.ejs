@@ -7,9 +7,23 @@
                 <h2>Welcome, <%= locals.username %></h2>
 
                 <form id= create-post action="/create-a-post" method="post">
-                    <textarea name="" id="" cols="30" rows="2"></textarea>
+                    <textarea name="post" id="" cols="30" rows="2"></textarea>
                     <input type="submit" value="Create a post">
                 </form>
+
+                <div id="posts">
+
+                    <% posts.forEach(post => { %>
+
+                        <div class="post">
+                            <h3><%= post.username %></h3>
+                            <p><%= post.post %></p>
+                            <small><em><%= post.created_at.toString().split( 'GMT')[0] %></em></small>
+                        </div>
+
+                    <% }) %>
+
+                </div>
 
             </main>
 
