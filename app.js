@@ -38,7 +38,7 @@ app.use((req, res, next) => {
 
 //homepage
 app.get('/', (req, res) => {
-    let sql = 'SELECT * FROM posts JOIN user ON posts.u_id_fk = u_id ORDER BY posts.created_at DESC'
+    let sql = 'SELECT * FROM posts JOIN users ON posts.u_id_fk = u_id ORDER BY posts.created_at DESC'
     connection.query(
         sql, (error, results) => {
             res.render('index', { posts: results })
@@ -54,7 +54,7 @@ app.post('/login', (req, res) => {
         password: req.body.password
     }
     // check if user exists
-    let sql = 'SELECT * FROM user WHERE email = ?'
+    let sql = 'SELECT * FROM users WHERE email = ?'
     connection.query(
         sql,
         [ user.email ],
@@ -121,7 +121,7 @@ app.post('/signup', (req, res) => {
 
     if (user.password === user.confirmPassword) {
         // check if user exists
-        let sql = 'SELECT * FROM user WHERE email = ?'
+        let sql = 'SELECT * FROM users WHERE email = ?'
         connection.query(
             sql,
             [user.email],
@@ -135,7 +135,7 @@ app.post('/signup', (req, res) => {
                     // hash password and create user
 
                     bcrypt.hash(user.password, 10, (error, hash) => {
-                        let sql = 'INSERT INTO user (username, email, password) VALUES (?,?,?)'
+                        let sql = 'INSERT INTO users (username, email, password) VALUES (?,?,?)'
                         connection.query(
                             sql,
                             [user.fullname, user.email, hash],
