@@ -38,10 +38,10 @@ app.use((req, res, next) => {
 
 //homepage
 app.get('/', (req, res) => {
-    let sql = 'SELECT * FROM posts JOIN users ON posts.u_id_fk = u_id ORDER BY posts.created_at DESC'
+    let sql = 'SELECT p_id, post, posts.created_at, u_id, username, picture FROM posts JOIN users ON posts.u_id_fk = u_id ORDER BY posts.created_at DESC'
     connection.query(
         sql, (error, results) => {
-            res.render('index', { posts: results })
+            res.render('index', { posts: results, userID: req.session.userID })
         }
     )
  
