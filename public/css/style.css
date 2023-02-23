@@ -120,6 +120,7 @@ nav a {
 #create-post {
     display: flex;
     flex-direction: column;
+    margin-bottom: 15px;
 }
 
 #create-post input[type="submit"] {
@@ -130,4 +131,36 @@ nav a {
     padding: 4px 8px;
     width: max-content;
     margin-top: 5px;
+}
+
+.post {
+    display: flex;
+    margin-bottom: 5px;
+    width: 600px;
+}
+
+.avatar {
+    width: 60px;
+    height: 60px;
+    margin-right: 10px;
+}
+
+.avatar img {
+    height: 100%;
+    border-radius: 50px;
+}
+
+.post-info {
+    width: 530px;
+}
+
+.post-info > div {
+    display: flex;
+    align-items: end;
+}
+
+.post-info .btns a {
+    color: #0b0ba5;
+    text-decoration: none;
+    margin-right: 10px;
 }
