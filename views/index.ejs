@@ -16,9 +16,25 @@
                     <% posts.forEach(post => { %>
 
                         <div class="post">
-                            <h3><%= post.username %></h3>
-                            <p><%= post.post %></p>
-                            <small><em><%= post.created_at.toString().split( 'GMT')[0] %></em></small>
+                            <div class="avatar">
+                                <img src="/images/profile_pictures/<%= post.picture %>" alt="">
+                            </div>
+                            <div class="post-info">
+                                <h3><%= post.username %></h3>
+                                <p><%= post.post %></p>
+                                <div>
+                                    <div class="btns">
+
+                                        <a href="">Like</a>
+                                        
+                                        <% if(userID === post.u_id) { %>
+                                            <a href="">Delete</a>
+                                        <% } %>   
+                                    </div>
+                                    <small><em><%= post.created_at.toString().split( 'GMT')[0] %></em></small>
+                                </div>
+                                
+                            </div>  
                         </div>
 
                     <% }) %>
