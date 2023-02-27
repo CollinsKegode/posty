@@ -177,6 +177,40 @@ app.post('/create-a-post', (req, res) => {
     )
 })
 
+// delete a post
+app.post('/delete-post/:id', (req,res) => {
+    let sql = 'DELETE FROM posts WHERE p_id = ?'
+    connection.query(
+        sql,
+        [req.params.id],
+        (error, results) => {
+            res.redirect('/')
+        }
+    )
+})
+
+//like a post 
+app.post('/like-post/:id', (req, res) => {
+    let sql = 'INSERT INTO likes (p_id_fk, u_id_fk) VALUES (?,?)'
+    connection.query(
+        sql,
+        [req.params.id, req.session.userID],
+        (error, results) => {
+            res.redirect('/')
+        }
+    )
+})
+
+//view likes
+app.get('/likes', (req, res) => {
+    if (res.locals.isLoggedIn) {
+        res.render('likes')
+    } else {
+        res.redirect('/login')
+    }
+    res.render('likes')
+})
+
 app.listen(4000, () => {
     console.log('app is running...');
 })
