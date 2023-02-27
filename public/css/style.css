@@ -159,8 +159,20 @@ nav a {
     align-items: end;
 }
 
-.post-info .btns a {
+.post-info .btns {
+    display: flex;
+}
+
+.post-info .btns input[type='submit'] {
     color: #0b0ba5;
     text-decoration: none;
     margin-right: 10px;
+    background-color: #fff;
+    border: 0;
+    cursor: pointer;
 }
+
+.post-info .btns input[type='submit']:hover {
+    border-bottom: 1px solid #0b0ba5;
+}
+
