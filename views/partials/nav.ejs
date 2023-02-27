@@ -4,6 +4,8 @@
         <ul>
 
             <% if (locals.isLoggedIn) { %>
+                <li><a href="">My posts</a></li>
+                <li><a href="/likes">Likes</a></li>
                 <li><a href="/logout">Logout</a></li>
             <% } else { %>
                 <li><a href="/signup">Signup</a></li>
