@@ -201,14 +201,34 @@ app.post('/like-post/:id', (req, res) => {
     )
 })
 
+// unlike a post
+app.post('/unlike-post/:id', (req, res) => {
+    let sql = 'DELETE FROM likes WHERE p_id_fk = ?'
+    connection.query(
+        sql,
+        [req.params.id],
+        (error, results) => {
+            res.redirect('/likes')
+        }
+    )
+})
+
 //view likes
 app.get('/likes', (req, res) => {
     if (res.locals.isLoggedIn) {
-        res.render('likes')
+        let sql = 'SELECT p_id, post, posts.created_at, u_id, username, picture FROM posts, users, likes WHERE posts.p_id = likes.p_id_fk AND posts.u_id_fk = users.u_id AND likes.u_id_fk = ?'
+
+        connection.query(
+            sql,
+            [req.session.userID],
+            (error, results) => {
+                res.render('likes', {posts: results})
+            }
+        )
+        
     } else {
         res.redirect('/login')
     }
-    res.render('likes')
 })
 
 app.listen(4000, () => {
