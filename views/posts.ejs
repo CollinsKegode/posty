@@ -1,0 +1,37 @@
+<%- include('partials/header') %>
+    <%- include('partials/nav') %>
+    
+    <div id="posts">
+
+        <% posts.forEach(post => { %>
+
+            <main class="container">
+                <div class="post">
+                    <div class="avatar">
+                        <img src="/images/profile_pictures/<%= post.picture %>" alt="">
+                    </div>
+                    <div class="post-info">
+                        <h3><%= post.username %></h3>
+                        <p><%= post.post %></p>
+                        <div>
+                            <div class="btns">
+                        
+                                <!-- show delete button if user is author of post  -->
+                                <% if(userID === post.u_id) { %>
+                                    <form action="/posts/delete-post/<%= post.p_id %>" method="post">
+                                        <input type="submit" value="Delete">
+                                    </form>
+                                <% } %>   
+                            </div>
+                            <small><em><%= post.created_at.toString().split( 'GMT')[0] %></em></small>
+                        </div>
+                        
+                    </div>  
+                </div>
+            </main>
+
+        <% }) %>
+
+    </div>
+
+<%- include('partials/footer')%> 
