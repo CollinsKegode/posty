@@ -94,6 +94,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 10px;
 }
 
 header h1 a {
@@ -174,5 +175,22 @@ nav a {
 
 .post-info .btns input[type='submit']:hover {
     border-bottom: 1px solid #0b0ba5;
+}
+
+#profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#profile #avatar {
+    width: 60px;
+    height: 60px;
+}
+
+#profile #avatar img {
+    width: 100%;
+    border-radius: 50px;
 }
 
