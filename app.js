@@ -30,6 +30,7 @@ app.use((req, res, next) => {
         res.locals.username = 'Guest'
     } else {
         res.locals.isLoggedIn = true
+        res.locals.userID = req.session.userID
         res.locals.username = req.session.username.toString().split(' ')[0]
     }
     // prompts what to do after
@@ -269,6 +270,22 @@ app.post('/posts/delete-post/:id', (req,res) => {
             res.redirect('/posts')
         }
     )
+})
+
+// profile
+app.get('/profile/:id', (req, res) => {
+    if (res.locals.isLoggedIn) {
+        let sql = 'SELECT * FROM users WHERE u_id = ?'
+    connection.query(
+        sql,
+        [req.params.id],
+        (error, results) => {
+            res.render('profile', {user: results[0], userID: req.session.userID})
+        }
+    )
+    } else {
+        res.redirect('/login')
+    }
 })
 
 app.listen(4000, () => {
