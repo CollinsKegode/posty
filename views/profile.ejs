@@ -1,0 +1,23 @@
+<%- include('partials/header') %>
+
+    <%- include('partials/nav') %>
+    <main class="container">
+        <div id="profile">
+            <div id="avatar">
+                <img src="/images/profile_pictures/<%= user.picture %>" alt="">
+            </div>
+            <h3><%= user.username %></h3>
+            <p><%= user.gender %></p>
+            <p><%= user.location %></p>
+
+            <% if(user.u_id === userID) { %>
+
+                <a href="">Edit profile</a>
+    
+             <% } %>
+        </div>
+
+        
+    </main>
+
+<%- include('partials/footer') %>
