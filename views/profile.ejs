@@ -12,12 +12,57 @@
 
             <% if(user.u_id === userID) { %>
 
-                <a href="">Edit profile</a>
-    
+                <a href="" id="btn-edit">Edit profile</a>
+                <div id="form">
+                    <form action="/edit-profile/<%= user.u_id %>" method="post">
+                        <label for="">Full Name</label>
+                        <input type="text" name="fullname" id="" value="<%= user.username %>">
+                        <label for="">Email</label>
+                        <input type="email" name="" id="" value="<%= user.email %>">
+                        <label for="">Phone Number</label>
+                        <input type="text" name="phonenumber" id="" value="<%= user.phonenumber %>">
+                        <label for="">Gender</label>
+                        <select name="" id="">
+
+                            <% if(user.gender !== null) { %>
+                                <option value="<%= user.gender %>"><%= user.gender %></option>
+                            <% } %>    
+                            <option>-- Choose Gender --</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                        <label for="">Location</label>
+                        <input type="text" name="" id="" value="<%= user.location %>">
+                        <label for="">Password</label>
+                        <input type="password" name="password" id="" required>
+                        <div>
+                            <button class="btn" id="btn-cancel">Cancel</button>
+                            <input class="btn" type="submit" value="Update">
+                        </div>
+                    </form>
+                </div>
              <% } %>
         </div>
 
         
     </main>
+
+    <script>
+        let editBtn = document.querySelector('#btn-edit')
+        let cancelBtn = document.querySelector('#btn-cancel')
+        let form = document.querySelector('#form')
+
+    editBtn.addEventListener('click', (e) => {
+        e.preventDefault()
+        form.style.display = 'block'
+    })
+
+    cancelBtn.addEventListener('click', (e) => {
+        e.preventDefault()
+        form.style.display = 'none'
+    })
+    </script>
+
+   
 
 <%- include('partials/footer') %>
