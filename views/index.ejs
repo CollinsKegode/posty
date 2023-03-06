@@ -24,13 +24,15 @@
                                 <p><%= post.post %></p>
                                 <div>
                                     <div class="btns">
-                                        <!-- show like button if posts is liked already -->
+                                        <!-- show like button if posts is not yet liked -->
                                         <form action="/like-post/<%= post.p_id %>" method="post">
                                             <input type="submit" value="Like">
                                         </form>
                                         
                                         <!-- show unlike button id posts is liked already -->
-
+                                        <form action="/unlike-post/<%= post.p_id %>" method="post">
+                                            <input type="submit" value="unlike">
+                                        </form>
                                         
                                         <!-- show delete button if user is author of post  -->
                                         <% if(userID === post.u_id) { %>
