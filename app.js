@@ -231,7 +231,7 @@ app.get('/likes', (req, res) => {
         res.redirect('/login')
     }
 })
-
+  
 //likes: unlike a post
 app.post('/likes/unlike-post/:id', (req, res) => {
     let sql = 'DELETE FROM likes WHERE id = ?'
@@ -286,6 +286,26 @@ app.get('/profile/:id', (req, res) => {
     } else {
         res.redirect('/login')
     }
+})
+
+//edit profile 
+app.post('/edit-profile/:id', (req, res) => {
+    let sql = 'SELECT password FROM users WHERE u_id = ?'
+    connection.query(
+        sql,
+        [req.params.id],
+        (error, results) => {
+            bcrypt.compare(req.body.password, results[0].password, (error, isEqual) => {
+                if (isEqual) {
+                    //update the profile with new details from the form
+                    console.log('Update profile');
+                } else {
+                    //render the profile form with proper input validation
+                    console.log('Incorect password');
+                }
+            })
+        }
+    )
 })
 
 app.listen(4000, () => {
