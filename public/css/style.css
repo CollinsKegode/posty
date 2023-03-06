@@ -155,6 +155,15 @@ nav a {
     width: 530px;
 }
 
+.post-info h3 a {
+    color: #0b0ba5;
+    text-decoration: none; 
+}
+
+.post-info h3 a:hover {
+    text-decoration: underline #0b0ba5;
+}
+
 .post-info > div {
     display: flex;
     align-items: end;
@@ -194,3 +203,52 @@ nav a {
     border-radius: 50px;
 }
 
+#profile #form {
+    display: none;
+}
+
+#profile form {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #f2f2f2;
+    border-radius: 10px;
+    padding: 10px;
+    width: 450px;
+}
+
+#profile form label {
+    font-size: 15px;
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+#profile form div {
+    width: max-content;
+    margin: 0 auto;
+}
+
+#profile .btn {
+ color: #fff;
+ width: 90px;
+ margin-top: 10px;
+}
+
+#profile #btn-cancel {
+ background-color: #ff0000;
+ border: 1px solid #ff0000;
+}
+
+#profile #btn-cancel:hover {
+    color: #ff0000;
+    background-color: #fff;
+}
+
+#profile input[type="submit"] {
+    background-color: #008000;
+    border: 1px solid #008000;
+}
+
+#profile input[type="submit"]:hover {
+    color: #008000;
+    background-color: #fff;
+}
