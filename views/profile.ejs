@@ -18,23 +18,27 @@
                         <label for="">Full Name</label>
                         <input type="text" name="fullname" id="" value="<%= user.username %>">
                         <label for="">Email</label>
-                        <input type="email" name="" id="" value="<%= user.email %>">
+                        <input type="email" name="email" id="" value="<%= user.email %>">
                         <label for="">Phone Number</label>
                         <input type="text" name="phonenumber" id="" value="<%= user.phonenumber %>">
                         <label for="">Gender</label>
-                        <select name="" id="">
+                        <select name="gender" id="">
 
                             <% if(user.gender !== null) { %>
                                 <option value="<%= user.gender %>"><%= user.gender %></option>
                             <% } %>    
                             <option>-- Choose Gender --</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
                         </select>
                         <label for="">Location</label>
-                        <input type="text" name="" id="" value="<%= user.location %>">
+                        <input type="text" name="location" id="" value="<%= user.location %>">
                         <label for="">Password</label>
                         <input type="password" name="password" id="" required>
+                        
+                        <% if(error) { %>
+                            <small style="color: #ff0000;" >Incorect Password</small>
+                        <% } %>
                         <div>
                             <button class="btn" id="btn-cancel">Cancel</button>
                             <input class="btn" type="submit" value="Update">
