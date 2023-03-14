@@ -24,15 +24,26 @@
                                 <p><%= post.post %></p>
                                 <div>
                                     <div class="btns">
-                                        <!-- show like button if posts is not yet liked -->
-                                        <form action="/like-post/<%= post.p_id %>" method="post">
+
+                                        <!--  check if post is liked -->
+                                        
+                                        <% if (likes.some(like => like.p_id_fk === post.p_id)) { %>
+                                            <!-- show unlike button -->
+                                        <form action="/unlike-post/<%= post.p_id %>" id="form" method="post">
+                                            <input type="submit" value="Unlike">
+                                        </form>
+
+                                        <% } else { %> 
+                                            <!-- show like button -->
+                                            <!-- show like button if posts is not yet liked -->
+                                        <form action="/like-post/<%= post.p_id %>" id="form" method="post">
                                             <input type="submit" value="Like">
                                         </form>
+
+                                        <% } %>   
                                         
                                         <!-- show unlike button id posts is liked already -->
-                                        <form action="/unlike-post/<%= post.p_id %>" method="post">
-                                            <input type="submit" value="unlike">
-                                        </form>
+                                        
                                         
                                         <!-- show delete button if user is author of post  -->
                                         <% if(userID === post.u_id) { %>
@@ -52,6 +63,7 @@
                 </div>
 
             </main>
+
 
         <% } else { %>
 
