@@ -203,9 +203,9 @@ nav a {
     border-radius: 50px;
 }
 
-#profile #form {
+/* #profile #form {
     display: none;
-}
+} */
 
 #profile form {
     display: flex;
