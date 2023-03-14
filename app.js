@@ -42,10 +42,18 @@ app.use((req, res, next) => {
 
 //homepage
 app.get('/', (req, res) => {
+    //get all posts
     let sql = 'SELECT p_id, post, posts.created_at, u_id, username, picture FROM posts JOIN users ON posts.u_id_fk = u_id ORDER BY posts.created_at DESC'
     connection.query(
-        sql, (error, results) => {
-            res.render('index', { posts: results, userID: req.session.userID })
+        sql, (error, posts) => {
+            //get likes by this user (one who is logged in)
+            connection.query(
+                'SELECT * FROM likes WHERE u_id_fk = ?',
+                [ req.session.userID ],
+                (error, likes) => {
+                    res.render('index', { posts: posts, userID: req.session.userID, likes: likes })
+                }
+            )
         }
     )
  
@@ -65,10 +73,10 @@ app.post('/create-a-post', (req, res) => {
 
 //homepage: delete a post
 app.post('/delete-post/:id', (req,res) => {
-    let sql = 'DELETE FROM posts WHERE p_id = ?'
+    let sql = 'DELETE FROM posts WHERE p_id_fk= ? AND u_id_fk = ?'
     connection.query(
         sql,
-        [req.params.id],
+        [req.params.id, req.session.userID],
         (error, results) => {
             res.redirect('/')
         }
@@ -89,10 +97,10 @@ app.post('/like-post/:id', (req, res) => {
 
 //homepage: unlike a post
 app.post('/unlike-post/:id', (req, res) => {
-    let sql = 'DELETE FROM likes WHERE id = ?'
+    let sql = 'DELETE FROM likes WHERE p_id_fk = ? AND u_id_fk = ?'
     connection.query(
         sql,
-        [req.params.id],
+        [req.params.id, req.session.userID],
         (error, results) => {
             res.redirect('/')
         }
@@ -237,10 +245,10 @@ app.get('/likes', (req, res) => {
   
 //likes: unlike a post
 app.post('/likes/unlike-post/:id', (req, res) => {
-    let sql = 'DELETE FROM likes WHERE id = ?'
+    let sql = 'DELETE FROM likes WHERE p_id_fk = ? AND u_id_fk = ?'
     connection.query(
         sql,
-        [req.params.id],
+        [req.params.id, req.session.userID],
         (error, results) => {
             res.redirect('/likes')
         }
@@ -286,6 +294,22 @@ app.get('/profile/:id', (req, res) => {
             res.render('profile', {user: results[0], userID: req.session.userID, error: false})
         }
     )
+    } else {
+        res.redirect('/login')
+    }
+})
+
+//get edit profile form
+app.get('/edit-profile', (req, res) => {
+    if (res.locals.isLoggedIn) {
+        let sql = 'SELECT * FROM users WHERE u_id = ?'
+        connection.query(
+            sql,
+            [req.session.userID],
+            (error, results) => {
+                res.render('edit-profile', {user: results[0], error: false, password: false})
+            }
+        )
     } else {
         res.redirect('/login')
     }
@@ -344,8 +368,17 @@ app.post('/edit-profile/:id', upload.single('picture'), (req, res) => {
                 
                 } else {
                     //return the profile form with proper input validation (incorect password: error message)
-                    let error = true
-                    return
+                    
+                    const user = {
+                        u_id: req.session.userID,
+                        username: req.body.fullname,
+                        email: req.body.email,
+                        phonenumber: req.body.phonenumber,
+                        gender: req.body.gender,
+                        location: req.body.location,
+                        
+                    }
+                    res.render('edit-profile', {user: user, error: true, password: req.body.password})
                 }
             })
         }
