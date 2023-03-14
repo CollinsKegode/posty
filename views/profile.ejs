@@ -12,8 +12,8 @@
 
             <% if(user.u_id === userID) { %>
 
-                <a href="" id="btn-edit">Edit profile</a>
-                <div id="form">
+                <a href="/edit-profile" id="btn-edit">Edit profile</a>
+                <!-- <div id="form">
                     <form action="/edit-profile/<%= user.u_id %>" method="post" enctype="multipart/form-data">
                         <label for="">Full Name</label>
                         <input type="text" name="fullname" id="" value="<%= user.username %>">
@@ -46,14 +46,14 @@
                             <input class="btn" type="submit" value="Update">
                         </div>
                     </form>
-                </div>
+                </div> -->
              <% } %>
         </div>
 
         
     </main>
 
-    <script>
+    <!-- <script>
         let editBtn = document.querySelector('#btn-edit')
         let cancelBtn = document.querySelector('#btn-cancel')
         let form = document.querySelector('#form')
@@ -67,7 +67,7 @@
         e.preventDefault()
         form.style.display = 'none'
     })
-    </script>
+    </script> -->
 
    
 
